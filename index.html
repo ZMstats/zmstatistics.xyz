@@ -68,10 +68,18 @@
     <img src="t" alt="" width="110" />
     <h1>Clicker</h1>
     <span id="count" class="odometer">0</span>
-    <button class="btn" onclick="postCount()">Click this</button>
+    <button class="btn" onclick="incrementCount()">Click this</button>
   </div>
 
   <script>
+    let totalCount = 0;
+
+    function incrementCount() {
+      totalCount++;
+      document.getElementById("count").innerHTML = totalCount;
+      postCount();
+    }
+
     function postCount() {
       fetch("https://zmlololol.borisplayz.repl.co/api/count", {
         method: "POST",
@@ -82,7 +90,8 @@
       fetch("https://zmlololol.borisplayz.repl.co/api/count")
         .then((res) => res.json())
         .then((data) => {
-          document.getElementById("count").innerHTML = data.count;
+          totalCount = data.count; // Update totalCount from the server
+          document.getElementById("count").innerHTML = totalCount;
         });
     }, 2000);
   </script>
