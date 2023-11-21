@@ -4,32 +4,69 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Background Stars</title>
+  <title>Clicker</title>
+  <link rel="shortcut icon" href="ok" type="image/x-icon" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="odometer.css" />
   <style>
-    /* Optional styles for video container */
-    #video-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1; /* Ensures video stays in the background */
+    /* Body styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #0f0f0f;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Content styles */
+    .content {
+      text-align: center;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    /* Button styles */
+    .btn {
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #2980b9;
+    }
+
+    /* Odometer styles */
+    .odometer {
+      font-size: 3rem;
+      margin: 20px 0;
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Video container -->
-  <div id="video-container">
-    <video autoplay muted loop id="stars-video">
-      <source src="stars.mp4" type="video/mp4">
-      <!-- Add other video formats if needed -->
-      Your browser does not support the video tag.
-    </video>
-  </div>
-
-  <!-- Your existing content -->
   <div class="content">
     <img src="t" alt="" width="110" />
+    <h1>Clicker</h1>
     <span id="count" class="odometer">0</span>
     <button class="btn" onclick="postCount()">Click this</button>
   </div>
