@@ -71,6 +71,9 @@
     <button class="btn" onclick="incrementCount()">Click this</button>
   </div>
 
+  <!-- Load the odometer library -->
+  <script src="odometer.js"></script>
+
   <script>
     let totalCount = 0;
 
@@ -91,9 +94,20 @@
         .then((res) => res.json())
         .then((data) => {
           totalCount = data.count; // Update totalCount from the server
-          document.getElementById("count").innerHTML = totalCount;
+          const odometerElement = document.getElementById("count");
+          if (odometerElement.odometer) {
+            odometerElement.odometer.update(totalCount);
+          } else {
+            // Initialize odometer if not already initialized
+            odometerElement.innerHTML = totalCount;
+            odometerElement.odometer = new Odometer({
+              el: odometerElement,
+              value: totalCount,
+              format: '(,ddd)',
+            });
+          }
         });
-    }, 2000);
+    }, 500);
   </script>
 </body>
 </html>
