@@ -6,8 +6,8 @@
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
-      background-color: #1f1f1f; 
-      color: #eee; 
+      background-color: #1f1f1f;
+      color: #eee;
       margin: 0;
       padding: 20px;
     }
@@ -24,8 +24,49 @@
       justify-content: center;
     }
 
-    li {
-      border: 1px solid #444; 
+    .search-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .search-input {
+      padding: 10px;
+      border-radius: 20px;
+      border: 2px solid #444;
+      background-color: #333;
+      color: #eee;
+      width: 300px;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: #999;
+    }
+
+    .search-input:focus {
+      border-color: #ffcc00;
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+    }
+
+    .view-channel-button {
+      padding: 8px 16px;
+      border: none;
+      background-color: #ffcc00;
+      color: #333;
+      font-size: 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .view-channel-button:hover {
+      background-color: #ffc107;
+    }
+
+    /* Additional styles for channel items if needed */
+    .channel-item {
+      border: 1px solid #444;
       border-radius: 8px;
       margin: 10px;
       padding: 10px;
@@ -36,11 +77,11 @@
       overflow: hidden;
     }
 
-    li:hover {
+    .channel-item:hover {
       transform: scale(1.1);
     }
 
-    img {
+    .channel-item img {
       width: 100px;
       height: 100px;
       border-radius: 50%;
@@ -49,78 +90,91 @@
       transition: transform 0.3s ease-in-out;
     }
 
-    li:hover img {
+    .channel-item:hover img {
       transform: scale(1.2);
-    }
-
-    strong {
-      font-weight: bold;
-    }
-
-    p {
-      margin: 5px 0;
-    }
-
-    /* animation load */
-    .loader {
-      border: 4px solid rgba(255, 255, 255, 0.3);
-      border-top: 4px solid #fff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      position: absolute;
-      top: 50%; 
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    @keyframes spin {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
   </style>
 </head>
 <body>
   <div class="loader"></div>
   <h1>All FYSC channels</h1>
+  
+  <!-- Search input field -->
+  <div class="search-container">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search channel name...">
+  </div>
+  
   <ul id="channelList" style="display: none;"></ul>
 
   <script>
     const apiUrl = 'https://validbubblybackslash.borisplayz.repl.co/';
     const loader = document.querySelector('.loader');
     const channelList = document.getElementById('channelList');
-    const placesCount = {};
+    let data = [];
+    let filteredData = [];
+    let placesCount = {};
 
-    channelList.style.display = 'none';
+    const searchInput = document.getElementById('searchInput');
+
+    loader.style.display = 'block'; // Show loader
 
     fetch(apiUrl)
       .then(response => response.json())
-      .then(data => {
-        loader.style.display = 'none';
-        channelList.style.display = 'flex';
+      .then(result => {
+        data = result;
+        loader.style.display = 'none'; // Hide loader
+        channelList.style.display = 'flex'; // Show channel list
+        filteredData = data.slice(); // Initialize filteredData with all data
 
-        data.forEach(channel => {
-          const place = (typeof channel.place === 'string' && channel.place.trim() !== '') ? channel.place : '<strong>place</strong>';
+        // Display initial list
+        displayChannels(filteredData);
 
-          // count place
-          if (!placesCount[place]) {
-            placesCount[place] = 1;
-          } else {
-            placesCount[place]++;
-          }
+        searchInput.addEventListener('input', event => {
+          const searchTerm = event.target.value.toLowerCase();
+          filteredData = data.filter(channel =>
+            channel.cname.toLowerCase().includes(searchTerm)
+          );
 
-          const listItem = document.createElement('li');
-          listItem.innerHTML = `
-            <img src="${channel.cimage}" alt="Profile Picture">
-            <p><strong>Channel</strong> ${place}: ${placesCount[place]}</p>
-            <p><strong>Channel Name:</strong> ${channel.cname}</p>
-            <p><strong>Subscribers:</strong> ${channel.subscriberCountRealEst.toLocaleString()}</p>
-          `;
-          channelList.appendChild(listItem);
+          displayChannels(filteredData);
         });
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        loader.style.display = 'none'; // Hide loader in case of error
+      });
+
+    function viewChannel(channelId) {
+      // Replace this URL with your server endpoint to fetch channel data
+      const channelUrl = `file:///C:/Users/NWH/Downloads/youtube-channel-list/public/channel/${channelId}`;
+
+      // Open the channel URL in a new tab
+      window.open(channelUrl, '_blank');
+    }
+
+    function displayChannels(channels) {
+      channelList.innerHTML = ''; // Clear existing list
+      placesCount = {}; // Reset placesCount
+
+      channels.forEach(channel => {
+        let place = channel.place || 'Unknown';
+        if (place.trim() === '') {
+          place = 'Unknown';
+        }
+
+        placesCount[place] = (placesCount[place] || 0) + 1;
+
+        const listItem = document.createElement('li');
+        listItem.classList.add('channel-item');
+        listItem.innerHTML = `
+          <img src="${channel.cimage}" alt="Profile Picture">
+          <p><strong>Channel Place:</strong> ${placesCount[place]}</p>
+          <p><strong>Channel Name:</strong> ${channel.cname}</p>
+          <p><strong>Subscribers:</strong> ${channel.subscriberCountRealEst.toLocaleString()}</p>
+          <button class="view-channel-button" onclick="viewChannel('${channel.cid}')">View Channel</button>
+        `;
+        channelList.appendChild(listItem);
+      });
+    }
   </script>
 </body>
 </html>
