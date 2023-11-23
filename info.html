@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FYSC Info</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #eee;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .info-text {
+      text-align: center;
+      margin-bottom: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .info-section {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #1f1f1f;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .info-section.loaded .info-text {
+      opacity: 1;
+    }
+
+    .version {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.8em;
+      opacity: 0.7;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .info-section.loaded .version {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="info-section">
+    <h1>FYSC Info</h1>
+    <div class="info-text">
+      <p>This list contains all FYSC users that typed <strong>!add</strong>.</p>
+      <p>Channels that don't have a profile picture are terminated from YouTube or they deleted their channel.</p>
+    </div>
+    <div class="version">Site version: v2.01</div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      const infoSection = document.querySelector('.info-section');
+      infoSection.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>
