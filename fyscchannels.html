@@ -14,6 +14,30 @@
 
     h1 {
       text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info-button {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffcc00, #ff8800);
+      color: #fff;
+      font-size: 20px;
+      text-align: center;
+      line-height: 40px;
+      text-decoration: none;
+      margin-left: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .info-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
     }
 
     ul {
@@ -127,7 +151,7 @@
 </head>
 <body>
   <div class="loader"></div>
-  <h1>All FYSC channels</h1>
+  <h1>All FYSC channels <a href="https://zmstatics.xyz/info" target="_blank" class="info-button">i</a></h1>
   
   <div class="search-container">
     <input type="text" id="searchInput" class="search-input" placeholder="Search channel name...">
