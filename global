@@ -1,17 +1,1 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Page Refresh Example</title>
-</head>
-<body>
-  <button onclick="refreshPage()">Refresh Page</button>
-
-  <script>
-    function refreshPage() {
-      // Reload the current page
-      location.reload();
-    }
-  </script>
-</body>
-</html>
+// hi
