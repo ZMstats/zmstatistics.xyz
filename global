@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Page with Refresh Functionality</title>
+</head>
+<body>
+
+  <script>
+    // Function to handle the action based on URL parameters
+    function handleURLParameters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const refreshParam = urlParams.get('refreshglobally');
+
+      // Check if the URL parameter matches the desired trigger
+      if (refreshParam !== null) {
+        // Perform your action here, such as triggering a reload or other functionality
+        console.log('Global Refresh initiated!');
+        // Example: Reload the page after 3 seconds
+        setTimeout(() => {
+          location.reload();
+        }, 3000);
+      }
+    }
+
+    // Call the function when the page loads to check the URL parameters
+    window.onload = handleURLParameters;
+  </script>
+</body>
+</html>
