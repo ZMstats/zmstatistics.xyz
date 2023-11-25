@@ -191,140 +191,140 @@
     
     <ul id="channelList" style="display: none;"></ul>
 
-   
-<script>
-    const apiUrl = 'https://validbubblybackslash.borisplayz.repl.co/';
-    const loader = document.querySelector('.loader');
-    const channelList = document.getElementById('channelList');
-    let data = [];
-    let filteredData = [];
-    let placesCount = {};
+    <script>
+        const apiUrl = 'https://validbubblybackslash.borisplayz.repl.co/';
+        const loader = document.querySelector('.loader');
+        const channelList = document.getElementById('channelList');
+        let data = [];
+        let filteredData = [];
+        let placesCount = {};
 
-    const searchInput = document.getElementById('searchInput');
+        const searchInput = document.getElementById('searchInput');
 
-    loader.style.display = 'block';
-
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(result => {
-            data = result;
-            loader.style.display = 'none';
-            channelList.style.display = 'flex';
-            filteredData = data.slice();
-
-            displayChannels(filteredData);
-
-            searchInput.addEventListener('input', event => {
-                const searchTerm = event.target.value.toLowerCase();
-                filteredData = data.filter(channel =>
-                    channel.cname.toLowerCase().includes(searchTerm)
-                );
-
-                displayChannels(filteredData);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            loader.style.display = 'none';
-        });
-
-    function viewChannel(channelId) {
-        const channel = data.find(channel => channel.cid === channelId);
-        if (channel && channel.cid) {
-            const youtubeURL = `https://www.youtube.com/channel/${channel.cid}`;
-            window.open(youtubeURL, '_blank');
-        } else {
-            console.log('Channel ID not available');
-        }
-    }
-
-    function displayChannels(channels) {
-        channelList.innerHTML = '';
-        placesCount = {};
-
-        channels.forEach(channel => {
-            let place = channel.place || 'Unknown';
-            if (place.trim() === '') {
-                place = 'Unknown';
-            }
-
-            placesCount[place] = (placesCount[place] || 0) + 1;
-
-            const listItem = document.createElement('li');
-            listItem.classList.add('channel-item');
-            listItem.innerHTML = `
-                <img src="${channel.cimage}" alt="Profile Picture">
-                <p><strong>Channel Place:</strong> ${placesCount[place]}</p>
-                <p><strong>Channel Name:</strong> ${channel.cname}</p>
-                <p><strong>Subscribers:</strong> ${channel.subscriberCountRealEst.toLocaleString()}</p>
-                <button onclick="viewChannel('${channel.cid}')">View Channel</button>
-            `;
-            channelList.appendChild(listItem);
-        });
-    }
-
-    const seasonButton = document.getElementById('seasonButton');
-    const apiUrlSeason2 = 'https://validbubblybackslash2.borisplayz.repl.co/';
-
-    let currentSeason = 1; 
-
-    seasonButton.addEventListener('click', () => {
         loader.style.display = 'block';
 
-        if (currentSeason === 1) {
-            fetch(apiUrlSeason2)
-                .then(response => response.json())
-                .then(result => {
-                    data = result;
-                    loader.style.display = 'none';
-                    filteredData = data.slice();
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(result => {
+                data = result;
+                loader.style.display = 'none';
+                channelList.style.display = 'flex';
+                filteredData = data.slice();
+
+                displayChannels(filteredData);
+
+                searchInput.addEventListener('input', event => {
+                    const searchTerm = event.target.value.toLowerCase();
+                    filteredData = data.filter(channel =>
+                        channel.cname.toLowerCase().includes(searchTerm)
+                    );
 
                     displayChannels(filteredData);
-
-                    searchInput.addEventListener('input', event => {
-                        const searchTerm = event.target.value.toLowerCase();
-                        filteredData = data.filter(channel =>
-                            channel.cname.toLowerCase().includes(searchTerm)
-                        );
-
-                        displayChannels(filteredData);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    loader.style.display = 'none';
                 });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                loader.style.display = 'none';
+            });
 
-            seasonButton.textContent = 'Season 1';
-            currentSeason = 2;
-        } else {
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(result => {
-                    data = result;
-                    loader.style.display = 'none';
-                    filteredData = data.slice();
-
-                    displayChannels(filteredData);
-
-                    searchInput.addEventListener('input', event => {
-                        const searchTerm = event.target.value.toLowerCase();
-                        filteredData = data.filter(channel =>
-                            channel.cname.toLowerCase().includes(searchTerm)
-                        );
-
-                        displayChannels(filteredData);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    loader.style.display = 'none';
-                });
-
-            seasonButton.textContent = 'Season 3';
-            currentSeason = 1;
+        function viewChannel(channelId) {
+            const channel = data.find(channel => channel.cid === channelId);
+            if (channel && channel.cid) {
+                const youtubeURL = `https://www.youtube.com/channel/${channel.cid}`;
+                window.open(youtubeURL, '_blank');
+            } else {
+                console.log('Channel ID not available');
+            }
         }
-    });
-</script>
+
+        function displayChannels(channels) {
+            channelList.innerHTML = '';
+            placesCount = {};
+
+            channels.forEach(channel => {
+                let place = channel.place || 'Unknown';
+                if (place.trim() === '') {
+                    place = 'Unknown';
+                }
+
+                placesCount[place] = (placesCount[place] || 0) + 1;
+
+                const listItem = document.createElement('li');
+                listItem.classList.add('channel-item');
+                listItem.innerHTML = `
+                    <img src="${channel.cimage}" alt="Profile Picture">
+                    <p><strong>Channel Place:</strong> ${placesCount[place]}</p>
+                    <p><strong>Channel Name:</strong> ${channel.cname}</p>
+                    <p><strong>Subscribers:</strong> ${channel.subscriberCountRealEst.toLocaleString()}</p>
+                    <button onclick="viewChannel('${channel.cid}')">View Channel</button>
+                `;
+                channelList.appendChild(listItem);
+            });
+        }
+
+        const seasonButton = document.getElementById('seasonButton');
+        const apiUrlSeason1 = 'https://grape-sticky-store.glitch.me/';
+        const apiUrlSeason2 = 'https://validbubblybackslash2.borisplayz.repl.co/';
+
+        let currentSeason = 1; 
+
+        seasonButton.addEventListener('click', () => {
+            loader.style.display = 'block';
+
+            if (currentSeason === 1) {
+                fetch(apiUrlSeason2)
+                    .then(response => response.json())
+                    .then(result => {
+                        data = result;
+                        loader.style.display = 'none';
+                        filteredData = data.slice();
+
+                        displayChannels(filteredData);
+
+                        searchInput.addEventListener('input', event => {
+                            const searchTerm = event.target.value.toLowerCase();
+                            filteredData = data.filter(channel =>
+                                channel.cname.toLowerCase().includes(searchTerm)
+                            );
+
+                            displayChannels(filteredData);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                        loader.style.display = 'none';
+                    });
+
+                seasonButton.textContent = 'Season 1';
+                currentSeason = 2;
+            } else {
+                fetch(apiUrlSeason1)
+                    .then(response => response.json())
+                    .then(result => {
+                        data = result;
+                        loader.style.display = 'none';
+                        filteredData = data.slice();
+
+                        displayChannels(filteredData);
+
+                        searchInput.addEventListener('input', event => {
+                            const searchTerm = event.target.value.toLowerCase();
+                            filteredData = data.filter(channel =>
+                                channel.cname.toLowerCase().includes(searchTerm)
+                            );
+
+                            displayChannels(filteredData);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                        loader.style.display = 'none';
+                    });
+
+                seasonButton.textContent = 'Season 3';
+                currentSeason = 1;
+            }
+        });
+    </script>
 </body>
 </html>
