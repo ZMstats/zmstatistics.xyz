@@ -192,7 +192,7 @@
     <ul id="channelList" style="display: none;"></ul>
 
     <script>
-        const apiUrl = 'https://validbubblybackslash.borisplayz.repl.co/';
+        const apiUrl = process.env.API_URL;
         const loader = document.querySelector('.loader');
         const channelList = document.getElementById('channelList');
         let data = [];
