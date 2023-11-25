@@ -248,7 +248,7 @@ body {
       const searchButton = document.getElementById('searchButton');
       searchButton.classList.add('loading');
 
-      fetch('https://validbubblybackslash3.borisplayz.repl.co/')
+      fetch('http://grape-sticky-store.glitch.me/')
         .then(response => response.json())
         .then(data => {
           const results = data.filter(channel => channel.cname.toLowerCase().includes(searchQuery));
