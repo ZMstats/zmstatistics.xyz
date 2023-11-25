@@ -248,7 +248,7 @@ body {
       const searchButton = document.getElementById('searchButton');
       searchButton.classList.add('loading');
 
-      fetch('https://validbubblybackslash.borisplayz.repl.co/')
+      fetch('https://validbubblybackslash3.borisplayz.repl.co/')
         .then(response => response.json())
         .then(data => {
           const results = data.filter(channel => channel.cname.toLowerCase().includes(searchQuery));
