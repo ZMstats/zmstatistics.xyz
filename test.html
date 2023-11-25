@@ -2,14 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Subscriber Count</title>
-  <!-- Link your stylesheets and scripts here -->
-  <link rel="stylesheet" href="odometer.css" />
-  <script src="odometer.js"></script>
+  <title>YouTube Channel Subscriber Count</title>
   <style>
- body {
+    body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
@@ -58,71 +53,79 @@
       margin-bottom: 10px;
     }
 
-    .channel-info {
-      text-align: center;
-    }
-
     .odometer {
       font-size: 36px;
       color: #ff6b6b;
     }
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #222;
-      color: #fff;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
-    .odometer {
-      font-size: 3rem;
-      margin-top: 20px;
-    }
   </style>
+  <!-- Add the odometer.js library -->
+  <script src="odometer.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>Channel Subscriber Count</h1>
-    <div id="subscriberCount" class="odometer">0</div>
+    <h1>YouTube Channel Subscriber Count</h1>
+    <input type="text" id="searchInput" placeholder="Search channels...">
+    <div id="channelList"></div>
   </div>
 
   <script>
-    // Function to update the subscriber count using Odometer
-    function updateSubscriberCount(newCount) {
-      const odometerElement = document.getElementById('subscriberCount');
-      if (odometerElement.odometer) {
-        odometerElement.odometer.update(newCount);
-      } else {
-        odometerElement.innerHTML = newCount;
-        odometerElement.odometer = new Odometer({
-          el: odometerElement,
-          value: newCount,
-          format: '(,ddd)',
+    const url = 'http://95.111.225.57:5666/top50_youtube_hexzd/live?akey=API-_key-8UCD7P7h0IjG3rF9dfJ7ahY6pnVJOhnTFaAqogmKg&skey=KarFC9A5zo8LMBDyiCgzEJQMG3X5ermp43o4cjHwarAn50';
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const channelList = document.getElementById('channelList');
+
+        const formatSubscriberCount = count => {
+          const odometer = document.createElement('span');
+          odometer.className = 'odometer';
+          odometer.innerHTML = count;
+          return odometer;
+        };
+
+        const updateChannelList = searchTerm => {
+          channelList.innerHTML = '';
+
+          const filteredChannels = data.filter(channel =>
+            channel.cname.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+
+          filteredChannels.forEach(channel => {
+            const channelCard = document.createElement('div');
+            channelCard.classList.add('channel-card');
+
+            const channelName = document.createElement('h2');
+            channelName.textContent = channel.cname;
+
+            const subscriberCount = formatSubscriberCount(channel.subscriberCountRealEst);
+
+            const channelImage = document.createElement('img');
+            channelImage.src = channel.cimage;
+            channelImage.alt = channel.cname;
+
+            channelCard.appendChild(channelName);
+            channelCard.appendChild(subscriberCount);
+            channelCard.appendChild(channelImage);
+
+            channelList.appendChild(channelCard);
+            new Odometer({ el: subscriberCount, value: 0, format: '(,ddd)' }).update(channel.subscriberCountRealEst);
+          });
+
+          if (filteredChannels.length === 0) {
+            const noResults = document.createElement('p');
+            noResults.textContent = 'No channels found.';
+            channelList.appendChild(noResults);
+          }
+        };
+
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', () => {
+          updateChannelList(searchInput.value);
         });
-      }
-    }
 
-    // Simulating real-time updates (replace this with actual WebSocket or data source)
-    function simulateRealTimeUpdates() {
-      setInterval(() => {
-        const newCount = Math.floor(Math.random() * 1000000); // Simulate a new count
-        updateSubscriberCount(newCount);
-      }, 3000); // Update every 3 seconds (for demonstration purposes)
-    }
-
-    // Start the simulation
-    simulateRealTimeUpdates();
+        updateChannelList('');
+      })
+      .catch(error => console.error('Error fetching data:', error));
   </script>
 </body>
 </html>
