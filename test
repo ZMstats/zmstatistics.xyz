@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube Channel Subscriber Count</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #1f1f1f;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 5px;
+    }
+
+    #channelList {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-gap: 20px;
+    }
+
+    .channel-card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #333;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    .channel-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .channel-info {
+      text-align: center;
+    }
+
+    .odometer {
+      font-size: 36px;
+      color: #ff6b6b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>YouTube Channel Subscriber Count</h1>
+    <input type="text" id="searchInput" placeholder="Search channels...">
+    <div id="channelList"></div>
+  </div>
+
+  <script src="odometer.min.js"></script>
+  <script>
+    const url = 'https://validbubblybackslash.borisplayz.repl.co';
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const channelList = document.getElementById('channelList');
+
+        const formatSubscriberCount = count => {
+          const odometer = document.createElement('span');
+          odometer.className = 'odometer';
+          odometer.innerHTML = count;
+          return odometer;
+        };
+
+        const updateChannelList = searchTerm => {
+          channelList.innerHTML = '';
+
+          const filteredChannels = data.filter(channel =>
+            channel.cname.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+
+          filteredChannels.forEach(channel => {
+            const channelCard = document.createElement('div');
+            channelCard.classList.add('channel-card');
+
+            const channelName = document.createElement('h2');
+            channelName.textContent = channel.cname;
+
+            const subscriberCount = formatSubscriberCount(channel.subscriberCountRealEst);
+
+            const channelImage = document.createElement('img');
+            channelImage.src = channel.cimage;
+            channelImage.alt = channel.cname;
+
+            channelCard.appendChild(channelName);
+            channelCard.appendChild(subscriberCount);
+            channelCard.appendChild(channelImage);
+
+            channelList.appendChild(channelCard);
+            new Odometer({ el: subscriberCount, value: 0, format: '(,ddd)' }).update(channel.subscriberCountRealEst);
+          });
+
+          if (filteredChannels.length === 0) {
+            const noResults = document.createElement('p');
+            noResults.textContent = 'No channels found.';
+            channelList.appendChild(noResults);
+          }
+        };
+
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', () => {
+          updateChannelList(searchInput.value);
+        });
+
+        updateChannelList('');
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  </script>
+</body>
+</html>
