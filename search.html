@@ -263,7 +263,7 @@ body {
     }
       function update() {
           if (lastChannelID == "") return;
-          fetch('https://validbubblybackslash.borisplayz.repl.co/')
+          fetch('https://grape-sticky-store.glitch.me/')
               .then(response => response.json())
               .then(data => {
                   const results = data.filter(channel => channel.cid.includes(lastChannelID));
