@@ -191,7 +191,7 @@
     setTimeout(delayStreamerModeButton, 3000);
 
     setInterval(() => {
-      fetch("http://95.111.225.57/api/count")
+      fetch("https://api.zmstatistics.xyz/api/count")
         .then((res) => res.json())
         .then((data) => {
           totalCount = data.count;
