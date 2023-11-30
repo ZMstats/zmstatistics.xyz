@@ -114,9 +114,24 @@
       }
     }
 
+    .gradient-btn-1 {
+  background-image: linear-gradient(to right, #fd746c, #ff9068);
+}
+
+.gradient-btn-2 {
+  background-image: linear-gradient(to right, #36d1dc, #5b86e5);
+}
+
+.gradient-btn-3 {
+  background-image: linear-gradient(to right, #4b6cb7, #182848);
+}
+
+
     .shake {
       animation: shake 0.5s ease-in-out;
     }
+
+    
   </style>
 
   <script>
@@ -142,16 +157,29 @@
     Your browser does not support the video tag.
   </video>
 
+
+  <script>
+    function navigateTo(url) {
+      window.location.href = url;
+    }
+  </script>
+
   <div class="content">
     <img src="t" alt="" width="110" />
     <h1>Zmstatistics.xyz</h1>
     <span id="count" class="odometer">0</span>
+    <button class="btn gradient-btn-1" onclick="navigateTo('https://zmstatistics.xyz/search')">FYSC Search</button>
+    <button class="btn gradient-btn-2" onclick="navigateTo('https://zmstatistics.xyz/fyscchannels')">FYSC View channels</button>
+    <button class="btn gradient-btn-3" onclick="navigateTo('https://zmstatistics.xyz/streams')">Current Livestreams</button>
     <button class="btn streamer-btn" onclick="toggleStreamerMode()">Streamer Mode</button>
     <button class="btn" onclick="incrementCount()">Click this</button>
   </div>
+  
 
   <script src="odometer.js"></script>
 
+
+  
   <script>
     let totalCount = 0;
     let streamerMode = false;
@@ -187,6 +215,8 @@
       const streamerBtn = document.querySelector(".streamer-btn");
       streamerBtn.style.animation = "fadeInDelay 1s forwards";
     }
+
+    
 
     setTimeout(delayStreamerModeButton, 3000);
 
