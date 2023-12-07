@@ -1,213 +1,168 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zm clicker</title>
-  <link rel="shortcut icon" href="https://yt3.googleusercontent.com/22kd_ezNdMDw2QMlUok5sR8TYL5zAiO2LMcZxr7SSvWjlZcwXNJaPOMRvnMltNmA33mimVes=s176-c-k-c0x00ffffff-no-rj" type="image/png">
-  <link rel="shortcut icon" href="ok" type="image/x-icon" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="odometer.css" />
-  <style>
-    body {    
-      margin: 0;
-      padding: 0;
-      font-family: 'Gotham Bold', sans-serif;
-      background-color: #0f0f0f;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden; 
-      position: relative; 
-    }
-    
-    .streamer-mode {
-      background-color: #00FF00; 
-    }
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Zm stats</title>
+          <style>
+            body {
+              margin: 0;
+              padding: 0;
+              font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+              background: linear-gradient(45deg, #202020, #0e0e0e, #1a1a1a, #000000, #202020); 
+              background-size: 400% 400%;
+              color: #fff; 
+              overflow: hidden; 
+              animation: gradientAnimation 50s ease infinite; 
+            }
 
-    video {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      z-index: -1; 
-      opacity: 0.15; 
-      transition: opacity 0s ease; 
-    }
+            @keyframes gradientAnimation {
+              0% {
+                background-position: 0% 50%;
+              }
+              50% {
+                background-position: 100% 50%;
+              }
+              100% {
+                background-position: 0% 50%;
+              }
+            }
 
-    .content {
-      text-align: center;
-      animation: fadeIn 1s ease forwards;
-      font-family: 'Gotham Bold', sans-serif; 
-      position: relative; 
-      z-index: 1; 
-    }
+            .container {
+              text-align: center;
+              margin-top: 40vh; 
+              opacity: 0; 
+              animation: fadeIn 2s ease forwards; 
+            }
 
-    .btn {
-      padding: 10px 20px;
-      font-size: 1.2rem;
-      background-color: #3498db;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      outline: 2px solid white;
-    }
+            @keyframes fadeIn {
+              0% {
+                opacity: 0;
+                font-size: 60px;
+              }
+              50% {
+                opacity: 1;
+                font-size: 48px; 
+              }
+              100% {
+                opacity: 1;
+                font-size: 48px;
+              }
+            }
 
-    .btn:hover {
-      background-color: #000000;
-    }
+            h1 {
+              font-size: 48px;
+              margin-bottom: 40px;
+              position: relative;
+            }
 
-    /* Streamer Mode button */
-    .streamer-btn {
-      position: absolute;
-      bottom: 20px; 
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0; 
-      transition: opacity 1s ease; 
-      background-color: #00FF00; 
-    }
+            .button-container {
+              display: flex;
+              justify-content: center;
+              margin-top: 30px;
+              opacity: 0; 
+              animation: fadeInButtons 1s ease forwards 0.4s; 
+            }
 
-    .odometer {
-      font-size: 3rem;
-      margin: 20px 0;
-    }
+            @keyframes fadeInButtons {
+              from {
+                opacity: 0;
+              }
+              to {
+                opacity: 1;
+              }
+            }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+            .fancy-button {
+              display: inline-block;
+              padding: 15px 30px;
+              margin: 0 10px;
+              font-size: 18px;
+              color: #fff;
+              text-decoration: none;
+              border: none;
+              border-radius: 25px;
+              cursor: pointer;
+              transition: all 0.3s ease;
+            }
 
-    @keyframes fadeInDelay {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
-    }
+            .button1 {
+              background-image: linear-gradient(45deg, #ff6347, #748bb9, #4682b4); 
+              background-size: 200% 200%;
+              animation: gradientAnimation1 4s ease infinite;
+            }
 
-    @keyframes shake {
-      0%, 100% {
-        transform: translateX(0);
-      }
-      10%, 30%, 50%, 70%, 90% {
-        transform: translateX(-5px);
-      }
-      20%, 40%, 60%, 80% {
-        transform: translateX(5px);
-      }
-    }
+            .button2 {
+              background-image: linear-gradient(90deg, #47ffea, #4682b4, #800080); 
+              background-size: 200% 200%;
+              animation: gradientAnimation2 4s ease infinite;
+            }
 
-    .shake {
-      animation: shake 0.5s ease-in-out;
-    }
-  </style>
+            .button3 {
+              background-image: linear-gradient(-45deg, #4682b4, #32cd32, #ff6347);
+              background-size: 200% 200%;
+              animation: gradientAnimation3 4s ease infinite;
+            }
 
-  <script>
-    function incrementCount() {
-      totalCount++;
-      document.getElementById("count").innerHTML = totalCount;
-      postCount();
-      shakeButton(); 
-    }
+            .button4 {
+              background-image: linear-gradient(-45deg, #4682b4, #185faa, rgb(71, 255, 157)); 
+              background-size: 200% 200%;
+              animation: gradientAnimation3 4s ease infinite;
+            }
 
-    function shakeButton() {
-      const btn = document.querySelector(".btn");
-      btn.classList.add("shake"); 
-      setTimeout(() => {
-        btn.classList.remove("shake"); 
-      }, 500); 
-    }
-  </script>
-</head>
-<body>
-  <video autoplay muted loop id="video-bg">
-    <source src="stars.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+            @keyframes gradientAnimation1 {
+              0% {
+                background-position: 0% 50%;
+              }
+              50% {
+                background-position: 100% 50%;
+              }
+              100% {
+                background-position: 0% 50%;
+              }
+            }
 
-  <div class="content">
-    <img src="t" alt="" width="110" />
-    <h1>Zmstatistics.xyz</h1>
-    <span id="count" class="odometer">0</span>
-    <button class="btn streamer-btn" onclick="toggleStreamerMode()">Streamer Mode</button>
-    <button class="btn" onclick="incrementCount()">Click this</button>
-  </div>
+            @keyframes gradientAnimation2 {
+              0% {
+                background-position: 0% 50%;
+              }
+              50% {
+                background-position: 100% 50%;
+              }
+              100% {
+                background-position: 0% 50%;
+              }
+            }
 
-  <script src="odometer.js"></script>
+            @keyframes gradientAnimation3 {
+              0% {
+                background-position: 0% 50%;
+              }
+              50% {
+                background-position: 100% 50%;
+              }
+              100% {
+                background-position: 0% 50%;
+              }
+            }
 
-  <script>
-    let totalCount = 0;
-    let streamerMode = false;
-    
-    function incrementCount() {
-      totalCount++;
-      document.getElementById("count").innerHTML = totalCount;
-      postCount();
-    }
-
-    function postCount() {
-      fetch("https://api.zmstatistics.xyz/api/count", {
-        method: "POST",
-      });
-    }
-
-    function toggleStreamerMode() {
-      const videoBg = document.getElementById("video-bg");
-      const body = document.querySelector("body");
-
-      if (!streamerMode) {
-        videoBg.style.opacity = "0"; 
-        body.classList.add("streamer-mode"); 
-      } else {
-        videoBg.style.opacity = "0.15"; 
-        body.classList.remove("streamer-mode"); 
-      }
-
-      streamerMode = !streamerMode; 
-    }
-
-    function delayStreamerModeButton() {
-      const streamerBtn = document.querySelector(".streamer-btn");
-      streamerBtn.style.animation = "fadeInDelay 1s forwards";
-    }
-
-    setTimeout(delayStreamerModeButton, 3000);
-
-    setInterval(() => {
-      fetch("https://api.zmstatistics.xyz/api/count")
-        .then((res) => res.json())
-        .then((data) => {
-          totalCount = data.count;
-          const odometerElement = document.getElementById("count");
-          if (odometerElement.odometer) {
-            odometerElement.odometer.update(totalCount);
-          } else {
-            odometerElement.innerHTML = totalCount;
-            odometerElement.odometer = new Odometer({
-              el: odometerElement,
-              value: totalCount,
-              format: '(,ddd)',
-            });
-          }
-        });
-    }, 2000);
-  </script>
-</body>
-</html>
+            /* Add hover animations */
+            .fancy-button:hover {
+              transform: scale(1.1);
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1>Welcome to <span style="color: #a939ffd6">zmstatistics.xyz</span></h1>
+            <div class="button-container">
+              <a href="https://zmstatistics.xyz/clicker" class="fancy-button button1">ZM Clicker</a>
+              <a href="https://zmstatistics.xyz/search" class="fancy-button button2">FYSC Subcount</a>
+              <a href="https://zmstatistics.xyz/fyscchannels" class="fancy-button button3">FYSC View channels</a>
+              <a href="https://zmstatistics.xyz/live" class="fancy-button button4">Current livestreams</a>
+            </div>
+          </div>
+        </body>
+        </html>
+            
