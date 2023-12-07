@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube Dark Theme</title>
+  <style>
+    body {
+      background-color: #202124;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .video {
+      width: 300px;
+      background-color: #333;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s ease-in-out; 
+    }
+
+    .video img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .video h2 {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    .video p {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    /* .live-icon {
+      color: red; 
+    } */
+
+    .video a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .video:hover {
+      transform: scale(1.05); 
+    }
+  </style>
+</head>
+<body>
+  <header>
+  </header>
+
+  <main>
+  
+    <div class="video">
+      <a href="https://www.youtube.com/watch?v=AeZUMjYBF8E" target="_blank">
+        <img src="https://i.ytimg.com/vi/AeZUMjYBF8E/hqdefault_live.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCkmfSJm5M2gir8sfZypiYhm-5kQw" alt="Thumbnail 1">
+        <h2>🔴Faking Your Subscriber Counts LIVE | Top 50 24/7</h2>
+        <p>By: Zm stats</p>
+      </a>
+    </div>
+
+    <div class="video">
+      <a href="https://www.youtube.com/watch?v=yGaBvxvudEw" target="_blank">
+        <img src="https://i.ytimg.com/vi/yGaBvxvudEw/hqdefault_live.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD9dyWzdJmf-BeHbZKXJHbPtw9PIw" alt="Thumbnail 2">
+        <h2>Geometry dash 2.2 countdown + news</h2>
+        <p>By: Zm stats</p>
+      </a>
+    </div>
+  </main>
+
+  <script>
+    const toggleTheme = document.getElementById('toggleTheme');
+    const body = document.body;
+
+    toggleTheme.addEventListener('change', function() {
+      if (this.checked) {
+        body.classList.remove('dark-theme');
+      } else {
+        body.classList.add('dark-theme');
+      }
+    });
+  </script>
+</body>
+</html>
