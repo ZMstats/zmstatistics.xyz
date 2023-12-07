@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zm clicker</title>
+  <link rel="shortcut icon" href="https://yt3.googleusercontent.com/22kd_ezNdMDw2QMlUok5sR8TYL5zAiO2LMcZxr7SSvWjlZcwXNJaPOMRvnMltNmA33mimVes=s176-c-k-c0x00ffffff-no-rj" type="image/png">
+  <link rel="shortcut icon" href="ok" type="image/x-icon" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="odometer.css" />
+  <style>
+    body {    
+      margin: 0;
+      padding: 0;
+      font-family: 'Gotham Bold', sans-serif;
+      background-color: #0f0f0f;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden; 
+      position: relative; 
+    }
+    
+    .streamer-mode {
+      background-color: #00FF00; 
+    }
+
+    video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -1; 
+      opacity: 0.15; 
+      transition: opacity 0s ease; 
+    }
+
+    .content {
+      text-align: center;
+      animation: fadeIn 1s ease forwards;
+      font-family: 'Gotham Bold', sans-serif; 
+      position: relative; 
+      z-index: 1; 
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      outline: 2px solid white;
+    }
+
+    .btn:hover {
+      background-color: #000000;
+    }
+
+    /* Streamer Mode button */
+    .streamer-btn {
+      position: absolute;
+      bottom: 20px; 
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0; 
+      transition: opacity 1s ease; 
+      background-color: #00FF00; 
+    }
+
+    .odometer {
+      font-size: 3rem;
+      margin: 20px 0;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDelay {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+      }
+      20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+      }
+    }
+
+    .shake {
+      animation: shake 0.5s ease-in-out;
+    }
+  </style>
+
+  <script>
+    function incrementCount() {
+      totalCount++;
+      document.getElementById("count").innerHTML = totalCount;
+      postCount();
+      shakeButton(); 
+    }
+
+    function shakeButton() {
+      const btn = document.querySelector(".btn");
+      btn.classList.add("shake"); 
+      setTimeout(() => {
+        btn.classList.remove("shake"); 
+      }, 500); 
+    }
+  </script>
+</head>
+<body>
+  <video autoplay muted loop id="video-bg">
+    <source src="stars.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="content">
+    <img src="t" alt="" width="110" />
+    <h1>Zmstatistics.xyz</h1>
+    <span id="count" class="odometer">0</span>
+    <button class="btn streamer-btn" onclick="toggleStreamerMode()">Streamer Mode</button>
+    <button class="btn" onclick="incrementCount()">Click this</button>
+  </div>
+
+  <script src="odometer.js"></script>
+
+  <script>
+    let totalCount = 0;
+    let streamerMode = false;
+    
+    function incrementCount() {
+      totalCount++;
+      document.getElementById("count").innerHTML = totalCount;
+      postCount();
+    }
+
+    function postCount() {
+      fetch("https://api.zmstatistics.xyz/api/count", {
+        method: "POST",
+      });
+    }
+
+    function toggleStreamerMode() {
+      const videoBg = document.getElementById("video-bg");
+      const body = document.querySelector("body");
+
+      if (!streamerMode) {
+        videoBg.style.opacity = "0"; 
+        body.classList.add("streamer-mode"); 
+      } else {
+        videoBg.style.opacity = "0.15"; 
+        body.classList.remove("streamer-mode"); 
+      }
+
+      streamerMode = !streamerMode; 
+    }
+
+    function delayStreamerModeButton() {
+      const streamerBtn = document.querySelector(".streamer-btn");
+      streamerBtn.style.animation = "fadeInDelay 1s forwards";
+    }
+
+    setTimeout(delayStreamerModeButton, 3000);
+
+    setInterval(() => {
+      fetch("https://api.zmstatistics.xyz/api/count")
+        .then((res) => res.json())
+        .then((data) => {
+          totalCount = data.count;
+          const odometerElement = document.getElementById("count");
+          if (odometerElement.odometer) {
+            odometerElement.odometer.update(totalCount);
+          } else {
+            odometerElement.innerHTML = totalCount;
+            odometerElement.odometer = new Odometer({
+              el: odometerElement,
+              value: totalCount,
+              format: '(,ddd)',
+            });
+          }
+        });
+    }, 2000);
+  </script>
+</body>
+</html>
